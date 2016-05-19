@@ -9,7 +9,7 @@ if(argv.help) {
 	console.log('\t--search="строка"\tИскомая строка (обяз.)'); // argv.search
 	console.log('\t--dir="строка"\t\tДиректория поиска (по умолчанию ./)'); // argv.dir
 	console.log('\t--set="строка"\t\tЗаменять на (по умолчанию не заменяет)'); // argv.set
-	console.log('\t--fmask="строка"\t\tПоиск только в файлах, в имени которых есть данная строка'); // argv.fmask
+	console.log('\t--fmask="строка"\tПоиск только в файлах, в имени которых есть данная строка'); // argv.fmask
 	console.log('\t--help\t\t\tВывод этой справки'); // argv.help
 	process.exit(0);
 }
