@@ -1,3 +1,21 @@
-Найдено "test222" в следующих файлах:
-D:\project\azbn-nodejs-search\searched.txt
-D:\project\azbn-nodejs-search\test\test2.txt
+Найдено "test" в следующих файлах:
+D:\project\azbn-nodejs-search\index.js
+D:\project\azbn-nodejs-search\node_modules\optimist\index.js
+D:\project\azbn-nodejs-search\node_modules\optimist\test\dash.js
+D:\project\azbn-nodejs-search\node_modules\optimist\test\parse.js
+D:\project\azbn-nodejs-search\node_modules\optimist\test\short.js
+D:\project\azbn-nodejs-search\node_modules\optimist\test\usage.js
+D:\project\azbn-nodejs-search\node_modules\optimist\test\whitespace.js
+D:\project\azbn-nodejs-search\node_modules\optimist\test\_.js
+D:\project\azbn-nodejs-search\node_modules\optimist\test\parse_modified.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\index.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\bool.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\dash.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\dotted.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\long.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\parse.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\num.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\parse_modified.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\short.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\whitespace.js
+D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\default_bool.js
