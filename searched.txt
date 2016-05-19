@@ -1,1 +1,3 @@
-X:\NodeJS\projects\azbn-nodejs-search\test\test2.txt
+Найдено "test222" в следующих файлах:
+D:\project\azbn-nodejs-search\searched.txt
+D:\project\azbn-nodejs-search\test\test2.txt

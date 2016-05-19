@@ -1,51 +1,59 @@
+
+
 var fs = require('fs');
 var path = require('path');
-
 var argv = require('optimist').argv;
-//console.log(argv.search);		// --search
-//console.log(argv.set);		// --set
-//console.log(argv.c);			// -c
 
 
-var re_search = new RegExp('(' + argv.search + ')', 'ig');
-
-var tree = {
-	'./' : {
-		item_list : {
-			
-		},
-		is_file : 0,
-		name : './',
-		path : './',
-	},
-};
-
-var searched = {
-	
-};
+if(argv.help) {
+	console.log('\t--search="строка"\tИскомая строка (обяз.)'); // argv.search
+	console.log('\t--dir="строка"\t\tДиректория поиска (по умолчанию ./)'); // argv.dir
+	console.log('\t--set="строка"\t\tЗаменять на (по умолчанию не заменяет)'); // argv.set
+	console.log('\t--help\t\t\tВывод этой справки'); // argv.help
+	process.exit(0);
+}
 
 
-fs.writeFileSync('./searched.txt', '', 'utf8');
+var		f_searched_txt = './searched.txt',
+		f_tree_json = './tree.json',
+		f_walk_result_json = './walk_result.json',
+		charset = 'utf8',
+		root = argv.dir ? argv.dir : './',
+		re_search = new RegExp('(' + argv.search + ')', 'ig')
+;
 
 
+fs.writeFileSync(f_searched_txt, 'Найдено "' + argv.search + '" в следующих файлах:\n', charset);
+
+
+var clearHTML = function(str) {
+	return str.replace(/<\/?[^>]+>/g,'');
+}
 
 
 var addToSearched = function(str) {
-	fs.appendFile('./searched.txt', str + '\n', 'utf8', function(err){
+	
+	fs.appendFile(f_searched_txt, str + '\n', charset, function(err){
 		if(err) {
 			console.log(err);
 		} else {
-			console.log('Результат добавлен');
+			console.log(str);
 		}
 	});
+	
 }
 
+
 var searchInFile = function(file, re, set) {
-	fs.readFile(file, 'utf8', function(err, text) {
+	
+	fs.readFile(file, charset, function(err, text) {
+		
 		if(err) {
 			console.log(err);
 		} else if(re.test(text)) {
+			
 			addToSearched(path.resolve(file));
+			
 			if(set && set != '') {
 				
 				var _result = text.replace(re, set);
@@ -61,67 +69,68 @@ var searchInFile = function(file, re, set) {
 				}
 				
 			}
-		}
-	});
-};
-
-var readDir = function(base, parent) {
-	
-	items = fs.readdirSync(base);
-	items.forEach(function(item){
-		
-		parent.item_list[item] = {};
-		var state = fs.statSync(base + '/' + item);
-		
-		parent.item_list[item].name = item;
-		parent.item_list[item].path = base + '/' +item;
-		
-		if(state.isFile()) {
-			parent.item_list[item].is_file = 1;
 			
-			searchInFile(path.normalize(base + '/' + item), re_search, argv.set);
-			
-		} else {
-			parent.item_list[item].is_file = 0;
-			parent.item_list[item].item_list = {};
-			readDir(path.normalize(base + '/' + item), parent.item_list[item]);
 		}
-		
-		/*
-		if(state.isDirectory()) {
-			parent.item_list[item].is_file = 0;
-			parent.item_list[item].item_list = {};
-			readDir(base + '/' + item, parent.item_list[item]);
-		} else {
-			parent.item_list[item].is_file = 1;
-		}
-		*/
 		
 	});
 	
 };
 
-readDir('./', tree['./']);
 
-fs.writeFile("./tree.json", JSON.stringify(tree), function(err) {
+var walk = function(dir, done) {
+	
+	var results = [];
+	
+	fs.readdir(dir, function(err, list) {
+		
+		if (err) return done(err);
+		
+		var pending = list.length;
+		
+		if (!pending) return done(null, results);
+		
+		list.forEach(function(file) {
+			
+			file = path.normalize(path.resolve(dir, file));
+			
+			fs.stat(file, function(err, stat) {
+				
+				if (stat && stat.isDirectory()) {
+					
+					walk(file, function(err, res) {
+						results = results.concat(res);
+						if (!--pending) done(null, results);
+					});
+					
+				} else if(stat && stat.isFile()) {
+					
+					//results.push(file);
+					
+					searchInFile(file, re_search, argv.set);
+					
+					if (!--pending) done(null, results);
+					
+				}
+				
+			});
+			
+		});
+		
+	});
+	
+};
+
+
+walk(root, function(err, res){
 	if(err) {
 		console.log(err);
 	} else {
-		console.log('Дерево сохранено');
+		fs.writeFile(f_walk_result_json, JSON.stringify({}), function(err) {
+			if(err) {
+				console.log(err);
+			} else {
+				console.log('Результаты поиска сохранены');
+			}
+		});
 	}
 });
-
-
-
-//var searched = searchInFile(tree, argv.search);
-/*
-fs.writeFile("./searched.json", JSON.stringify(searched), function(err) {
-	if(err) {
-		console.log(err);
-	} else {
-		console.log('Результаты поиска ' + argv.search + ' сохранены в архив');
-	}
-});
-*/
-
-//console.log(tree);
