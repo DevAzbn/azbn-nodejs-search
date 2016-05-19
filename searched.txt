@@ -1,5 +1,0 @@
-Найдено "test" в следующих файлах:
-D:\project\azbn-nodejs-search\node_modules\optimist\test\parse.js
-D:\project\azbn-nodejs-search\node_modules\optimist\test\parse_modified.js
-D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\parse_modified.js
-D:\project\azbn-nodejs-search\node_modules\optimist\node_modules\minimist\test\parse.js
